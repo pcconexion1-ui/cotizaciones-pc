@@ -378,6 +378,27 @@
             border-radius: 4px;
         }
 
+        /* Botón de eliminar visible y cómodo en teléfonos */
+        .btn-delete-mobile {
+            display: none;
+            width: 100%;
+            min-height: 44px;
+            margin-top: 8px;
+            padding: 10px 12px;
+            border: 0;
+            border-radius: 8px;
+            background: #dc3545;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-delete-mobile:active {
+            transform: scale(.98);
+        }
+
         /* Botones de acción dentro de la tabla */
         .btn-delete {
             background: #dc3545;
@@ -757,6 +778,18 @@
             transform-origin: top center;
         }
 
+        @media (max-width: 768px) {
+            /* En iPhone el botón de eliminar aparece dentro de cada artículo,
+               evitando que quede fuera de la pantalla por el ancho de la tabla. */
+            .btn-delete-mobile {
+                display: block;
+            }
+
+            .col-accion {
+                display: none !important;
+            }
+        }
+
         @media print {
             @page {
                 size: Letter portrait;
@@ -835,7 +868,7 @@
                 padding: 0;
                 max-width: 100%;
             }
-            .print-actions, .btn-add, .col-accion, .btn-delete {
+            .print-actions, .btn-add, .col-accion, .btn-delete, .btn-delete-mobile {
                 display: none !important;
             }
             .items-table th.col-accion, .items-table td.col-accion,
@@ -857,12 +890,6 @@
             }
 
             .profit-panel {
-                display: none !important;
-            }
-
-            /* Anticipo 0% o vacío: ocultar únicamente los cuatro resultados
-               de anticipo/saldo en PDF e impresión. Los botones permanecen activos. */
-            .hide-zero-advance-print .payment-breakdown-row {
                 display: none !important;
             }
             input, textarea {
@@ -1387,445 +1414,6 @@
         }
 
 </style>
-
-<style id="mobile-iphone-responsive">
-/* ============================================================
-   VISTA MÓVIL — iPhone / Safari
-   Mantiene escritorio intacto y adapta únicamente pantallas
-   pequeñas.
-   ============================================================ */
-@media screen and (max-width: 768px) {
-    html {
-        -webkit-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-        overflow-x: hidden;
-    }
-
-    body {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 10px;
-        overflow-x: hidden;
-        box-sizing: border-box;
-    }
-
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
-
-    /* El documento ocupa todo el ancho disponible del iPhone. */
-    .container,
-    .quotation-container,
-    .invoice-container,
-    main,
-    .page,
-    .document {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    /* Evitar que tablas grandes rompan la pantalla.
-       Las tablas conservan su estructura y permiten desplazamiento
-       horizontal cuando sea estrictamente necesario. */
-    .table-responsive,
-    .invoice-table-wrapper,
-    .items-table-wrapper {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-        max-width: 100%;
-    }
-
-    /* Los formularios pasan a una sola columna cuando el espacio
-       es reducido. */
-    .client-grid,
-    .form-grid,
-    .header-grid {
-        grid-template-columns: 1fr !important;
-        width: 100% !important;
-    }
-
-    input,
-    textarea,
-    select,
-    button {
-        font-size: 16px !important; /* evita zoom automático de Safari */
-        max-width: 100%;
-    }
-
-    input[type="number"],
-    input[type="text"],
-    input[type="date"],
-    textarea,
-    select {
-        width: 100%;
-        min-height: 44px;
-    }
-
-    textarea {
-        min-height: 90px;
-    }
-
-    button {
-        min-height: 44px;
-        touch-action: manipulation;
-    }
-
-    /* Controles de acciones cómodos para tocar con el dedo. */
-    .print-actions {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 10px !important;
-        width: 100% !important;
-        margin: 15px 0 !important;
-    }
-
-    .print-actions button {
-        width: 100% !important;
-    }
-
-    /* La tabla de productos se desplaza horizontalmente en vez
-       de comprimir columnas hasta volverlas ilegibles. */
-    #invoice-items {
-        width: max-content;
-        min-width: 720px;
-    }
-
-    /* Totales legibles en pantalla pequeña. */
-    .totals-section {
-        width: 100% !important;
-        font-size: 14px !important;
-    }
-
-    .totals-section td {
-        padding: 7px 5px !important;
-    }
-
-    .payment-detail {
-        white-space: normal !important;
-    }
-
-    #anticipo-porcentaje {
-        width: 70px !important;
-        min-height: 44px;
-        display: inline-block;
-    }
-
-    /* Fotos y elementos visuales nunca deben exceder el ancho. */
-    img,
-    .product-photo-box,
-    .blank-photo-slot {
-        max-width: 100%;
-    }
-
-    /* Evita que textos largos generen scroll horizontal. */
-    .company-name,
-    .company-slogan,
-    .company-address,
-    .company-details,
-    .whatsapp-contact,
-    .section-title,
-    .condition-field,
-    td,
-    th {
-        overflow-wrap: anywhere;
-    }
-
-    /* Espaciado cómodo para dedos. */
-    .btn-add,
-    .btn-delete,
-    .btn-footer-logo,
-    .btn-footer-logo-reset {
-        min-height: 44px;
-    }
-
-    /* Si hay botones flotantes, que no tapen el contenido. */
-    .floating-button,
-    .floating-actions {
-        max-width: calc(100vw - 20px);
-    }
-}
-
-/* iPhones muy estrechos. */
-@media screen and (max-width: 390px) {
-    body {
-        padding: 6px;
-    }
-
-    .totals-section {
-        font-size: 13px !important;
-    }
-
-    .totals-section td {
-        padding: 6px 3px !important;
-    }
-
-    .section-title {
-        font-size: 16px !important;
-    }
-}
-</style>
-
-
-<style id="iphone-layout-fix">
-/* ============================================================
-   AJUSTE ESPECÍFICO PARA iPHONE
-   Evita que el encabezado y los controles se salgan de pantalla.
-   ============================================================ */
-@media screen and (max-width: 768px) {
-
-    html, body {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        overflow-x: hidden !important;
-    }
-
-    body {
-        padding: 0 !important;
-    }
-
-    .cotizacion-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        margin: 0 !important;
-        padding: 14px !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        overflow: hidden !important;
-    }
-
-    /* ENCABEZADO: en iPhone se apila verticalmente.
-       Esto elimina el desbordamiento que aparece en la captura. */
-    .header-table {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 0 18px !important;
-    }
-
-    .header-table tbody,
-    .header-table tr {
-        display: block !important;
-        width: 100% !important;
-    }
-
-    .header-table td.header-logo-zone,
-    .header-table td.header-info-zone {
-        display: block !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 0 !important;
-        text-align: center !important;
-        vertical-align: middle !important;
-    }
-
-    .header-logo-zone {
-        margin-bottom: 12px !important;
-    }
-
-    .logo-placeholder {
-        width: 130px !important;
-        height: 130px !important;
-        margin: 0 auto 8px !important;
-    }
-
-    .logo-controls,
-    .footer-logo-controls {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 7px !important;
-        width: 100% !important;
-    }
-
-    .logo-controls button,
-    .footer-logo-controls button {
-        width: min(180px, 100%) !important;
-        min-height: 42px !important;
-    }
-
-    .header-info-zone {
-        overflow: hidden !important;
-    }
-
-    .company-name {
-        font-size: clamp(24px, 8vw, 30px) !important;
-        line-height: 1.05 !important;
-        letter-spacing: 0 !important;
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
-        word-break: break-word !important;
-    }
-
-    .slogan {
-        font-size: 12px !important;
-        line-height: 1.25 !important;
-        white-space: normal !important;
-    }
-
-    .company-address,
-    .company-details,
-    .whatsapp-contact {
-        width: 100% !important;
-        max-width: 100% !important;
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
-        word-break: break-word !important;
-        font-size: 12px !important;
-        line-height: 1.3 !important;
-    }
-
-    /* Barra de título: también se apila para que "Cotización",
-       número y fecha nunca se encimen. */
-    .title-bar {
-        display: block !important;
-        width: 100% !important;
-        margin-bottom: 18px !important;
-        padding: 9px 0 !important;
-    }
-
-    .doc-title,
-    .doc-date {
-        display: block !important;
-        width: 100% !important;
-        text-align: left !important;
-        white-space: normal !important;
-        overflow-wrap: anywhere !important;
-    }
-
-    .doc-title {
-        font-size: 17px !important;
-        margin-bottom: 5px !important;
-    }
-
-    .doc-date {
-        font-size: 13px !important;
-    }
-
-    /* Los controles de zoom no son necesarios en iPhone porque
-       Safari ya permite pellizcar para ampliar/reducir.
-       Se ocultan para no tapar el encabezado. */
-    #zoom-controls,
-    .zoom-controls {
-        display: none !important;
-    }
-
-    /* Botones de Guardar PDF e Imprimir: fijos abajo, pero dentro
-       del ancho del iPhone y uno debajo del otro. */
-    .print-actions {
-        position: fixed !important;
-        left: 10px !important;
-        right: 10px !important;
-        bottom: calc(10px + env(safe-area-inset-bottom)) !important;
-        width: auto !important;
-        max-width: none !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 8px !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        z-index: 10000 !important;
-    }
-
-    .print-actions button {
-        width: 100% !important;
-        min-height: 46px !important;
-        margin: 0 !important;
-        border-radius: 10px !important;
-        justify-content: center !important;
-    }
-
-    .print-help {
-        display: none !important;
-    }
-
-    /* Dejar espacio al final para que los botones flotantes
-       no cubran los últimos campos. */
-    .cotizacion-container {
-        padding-bottom: 125px !important;
-    }
-
-    /* Campos del cliente realmente utilizables con una mano. */
-    .client-grid {
-        grid-template-columns: 1fr !important;
-        gap: 9px !important;
-    }
-
-    .client-grid label,
-    .client-grid .label {
-        font-size: 14px !important;
-    }
-
-    .client-grid input,
-    .client-grid textarea,
-    .client-grid select {
-        width: 100% !important;
-    }
-
-    /* Tabla de productos: conserva sus columnas y permite
-       deslizarla horizontalmente sin romper toda la página. */
-    #invoice-items {
-        width: max-content !important;
-        min-width: 700px !important;
-        max-width: none !important;
-    }
-
-    .items-table-wrapper,
-    .invoice-table-wrapper {
-        overflow-x: auto !important;
-        max-width: 100% !important;
-        -webkit-overflow-scrolling: touch !important;
-    }
-
-    /* Si la tabla no tiene wrapper, el propio contenedor de la
-       cotización evita el desborde; se recomienda usar el dedo
-       para desplazarse por las columnas. */
-    .totals-section {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .totals-section td {
-        overflow-wrap: anywhere !important;
-    }
-}
-
-/* iPhone pequeño */
-@media screen and (max-width: 390px) {
-    .cotizacion-container {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-    }
-
-    .logo-placeholder {
-        width: 115px !important;
-        height: 115px !important;
-    }
-
-    .company-name {
-        font-size: 23px !important;
-    }
-}
-</style>
-
-
-<meta name="theme-color" content="#0056b3">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Cotizaciones PC">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icons/icon-180.png">
-
 </head>
 <body>
     <!-- Controles de zoom: se ocultan al guardar/imprimir -->
@@ -1960,6 +1548,7 @@
 - Amperaje de corriente: 3.95A (75W)
 - Tipo de conector: Punta cilíndrica 5.5mm * 2.5mm
 - Componentes: Incluye cargador y cable de poder.</textarea>
+                            <button type="button" class="btn-delete-mobile" onclick="deleteRow(this)" aria-label="Eliminar este ítem">🗑️ Eliminar ítem</button>
                         </div>
                     </td>
                     <td class="col-foto">
@@ -2000,18 +1589,18 @@
                     Q <span id="lbl-subtotal">0.00</span>
                 </td>
             </tr>
-            <tr class="payment-control-row payment-breakdown-row">
+            <tr class="payment-control-row">
                 <td class="totals-label">
                     ANTICIPO:
                     <input type="number" id="anticipo-porcentaje" value="50" min="0" max="100" step="1"
-                        oninput="updateAnticipo()" style="width:70px; margin-left:6px; padding:3px; text-align:center;">
+                        oninput="updateAnticipo()" style="width:55px; margin-left:6px; padding:3px; text-align:center;">
                     %
                 </td>
                 <td class="totals-value">
                     <span class="payment-detail">Precio Normal — Anticipo: Q <span id="lbl-anticipo-normal">0.00</span></span>
                 </td>
             </tr>
-            <tr class="payment-breakdown-row">
+            <tr>
                 <td class="totals-label"></td>
                 <td class="totals-value">
                     <span class="payment-detail">Precio Normal — Saldo: Q <span id="lbl-saldo-normal">0.00</span></span>
@@ -2023,13 +1612,13 @@
                     Q <span id="lbl-beneficio-efectivo">0.00</span>
                 </td>
             </tr>
-            <tr class="payment-breakdown-row">
+            <tr>
                 <td class="totals-label"></td>
                 <td class="totals-value">
                     <span class="payment-detail">Beneficio Efectivo — Anticipo: Q <span id="lbl-anticipo-efectivo">0.00</span></span>
                 </td>
             </tr>
-            <tr class="payment-breakdown-row">
+            <tr>
                 <td class="totals-label"></td>
                 <td class="totals-value">
                     <span class="payment-detail">Beneficio Efectivo — Saldo: Q <span id="lbl-saldo-efectivo">0.00</span></span>
@@ -2133,17 +1722,8 @@
             });
         }
 
-        function updateAdvancePrintVisibility() {
-            const input = document.getElementById('anticipo-porcentaje');
-            const porcentaje = input ? parseFloat(input.value) : NaN;
-            const isZeroOrEmpty = !Number.isFinite(porcentaje) || porcentaje <= 0;
-
-            document.body.classList.toggle('hide-zero-advance-print', isZeroOrEmpty);
-        }
-
         function prepareQuotationForPrint() {
             updateTermsPrintVisibility();
-            updateAdvancePrintVisibility();
         }
 
         // ============================================================
@@ -2822,6 +2402,7 @@
                 <td class="col-desc">
                     <div class="desc-container">
                         <textarea rows="3" placeholder="Descripción técnica del nuevo artículo..."></textarea>
+                        <button type="button" class="btn-delete-mobile" onclick="deleteRow(this)" aria-label="Eliminar este ítem">🗑️ Eliminar ítem</button>
                     </div>
                 </td>
                 <td class="col-foto">
@@ -2872,7 +2453,6 @@
             document.querySelectorAll('.terms-section-printable').forEach(section => {
                 section.classList.remove('terms-empty-print');
             });
-            document.body.classList.remove('hide-zero-advance-print');
         });
         
         document.addEventListener('keydown', function(event) {
@@ -2894,17 +2474,6 @@
             });
         });
         </script>
-
-
-<script>
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-        navigator.serviceWorker.register('./sw.js').catch(function (err) {
-            console.warn('Service Worker no disponible:', err);
-        });
-    });
-}
-</script>
 
 </body>
 </html>
