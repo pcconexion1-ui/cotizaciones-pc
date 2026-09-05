@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotización Formal de Venta - PC Conexión</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f8f9fa;
+            --border-color: #dee2e6;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f6f9;
+        }
+
+        .cotizacion-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        /* Encabezado */
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .header-logo-zone {
+            width: 30%;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .logo-placeholder {
+            width: 150px;
+            height: 100px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+            background: #fafafa;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .logo-placeholder span {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .header-info-zone {
+            width: 70%;
+            text-align: right;
+        }
+
+        .company-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .slogan {
+            font-style: italic;
+            color: #555;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .company-details {
+            font-size: 13px;
+            color: #666;
+            margin: 3px 0;
+        }
+
+        .title-bar {
+            border-top: 3px solid var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doc-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #444;
+            margin: 0;
+        }
+
+        .doc-date {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Secciones */
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            background-color: var(--secondary-color);
+            padding: 6px 10px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Formulario Cliente */
+        .client-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            width: 140px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* Tabla de ítems */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .items-table th {
+            background-color: #343a40;
+            color: #fff;
+            font-size: 13px;
+            padding: 8px 10px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .items-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .col-cant { width: 80px; }
+        .col-desc { width: auto; }
+        .col-foto { width: 110px; }
+        .col-costo { width: 105px; }
+        .col-margen { width: 95px; }
+        .col-precio { width: 115px; text-align: right; }
+        .col-total { width: 125px; text-align: right; }
+        .col-accion { width: 40px; text-align: center; }
+
+        .input-costo, .input-margen {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            text-align: right;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .input-margen {
+            text-align: center;
+        }
+
+        .calculated-price {
+            display: block;
+            font-family: monospace;
+            font-weight: 600;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .pricing-note {
+            font-size: 12px;
+            color: #666;
+            margin: -5px 0 12px;
+        }
+
+        .pricing-settings {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 0 12px;
+            font-size: 13px;
+        }
+
+        .pricing-settings input {
+            width: 90px;
+            padding: 5px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .items-table th.col-total { text-align: right; }
+
+        .input-cant {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .desc-container textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 6px;
+            font-family: inherit;
+            font-size: 13px;
+            resize: vertical;
+        }
+
+        /* Zona de Foto de Producto */
+        .product-photo-box {
+            width: 90px;
+            height: 75px;
+            border: 1px dashed #bbb;
+            background: #fbfbfb;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .product-photo-box span {
+            font-size: 9px;
+            color: #777;
+            text-align: center;
+            padding: 2px;
+        }
+
+        .input-price {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            text-align: right;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        /* Botones de acción dentro de la tabla */
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-delete:hover { background: #bd2130; }
+
+        .add-row-container {
+            margin-top: 15px;
+        }
+
+        .btn-add {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .btn-add:hover { background: #218838; }
+
+        /* Totales */
+        .totals-section {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .totals-section td {
+            padding: 4px 10px;
+            font-size: 13px;
+        }
+
+        .totals-label {
+            text-align: right;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .totals-value {
+            width: 150px;
+            text-align: right;
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .grand-total {
+            font-size: 15px;
+            color: var(--primary-color);
+            background-color: var(--secondary-color);
+        }
+
+        /* Condiciones */
+        .conditions-list {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .conditions-list li {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        /* Firma */
+        .signature-container {
+            margin-top: 50px;
+            width: 250px;
+            text-align: center;
+        }
+
+        .signature-line {
+            border-top: 1px solid #333;
+            margin-bottom: 5px;
+        }
+
+        .signature-title {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* Botón de impresión flotante */
+        .print-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+        }
+
+        .btn-print {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-print:hover { background: #0069d9; }
+
+        /* Estilos de Impresión / PDF */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .cotizacion-container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .print-actions, .btn-add, .col-accion, .btn-delete {
+                display: none !important;
+            }
+            .items-table th.col-accion, .items-table td.col-accion,
+            .items-table th.col-costo, .items-table td.col-costo,
+            .items-table th.col-margen, .items-table td.col-margen {
+                display: none !important;
+            }
+
+            .items-table th.col-precio, .items-table td.col-precio {
+                display: none !important;
+            }
+
+            .pricing-settings, .pricing-note {
+                display: none !important;
+            }
+            input, textarea {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                outline: none !important;
+                resize: none !important;
+            }
+            .logo-placeholder, .product-photo-box {
+                border: none !important;
+                background: transparent !important;
+            }
+            .logo-placeholder span, .product-photo-box span {
+                display: none !important;
+            }
+            /* Si no se subió foto, que no deje cuadro feo */
+            .logo-placeholder img:not([src]), .product-photo-box img:not([src]) {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cotizacion-container">
+        
+        <!-- Tabla de Encabezado -->
+        <table class="header-table">
+            <tr>
+                <td class="header-logo-zone">
+                    <!-- Selector de archivo oculto para el logo -->
+                    <input type="file" id="logo-input" accept="image/*" style="display: none;" onchange="previewImage(this, 'logo-preview')">
+                    <div class="logo-placeholder" onclick="document.getElementById('logo-input').click();" title="Haz clic para subir el logotipo">
+                        <img id="logo-preview" alt="Logotipo">
+                        <span>📷 Adjuntar Logo<br>(Haz clic aquí)</span>
+                    </div>
+                </td>
+                <td class="header-info-zone">
+                    <div class="company-name">PC CONEXIÓN</div>
+                    <div class="slogan">"Soluciones Tecnológicas para tu hogar y negocio"</div>
+                    <div class="company-details">3ra avenida 4-10 zona 1, San Lucas Sacatepéquez</div>
+                    <div class="company-details">Teléfono: 7791-7876</div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Barra de Título del documento -->
+        <div class="title-bar">
+            <div class="doc-title">COTIZACIÓN FORMAL DE VENTA</div>
+            <div class="doc-date">Fecha: <span id="current-date">4 de septiembre de 2026</span></div>
+        </div>
+
+        <!-- Datos del Cliente -->
+        <div class="section-title">Datos del Cliente</div>
+        <div class="client-grid">
+            <div class="form-group">
+                <label>Nombre Completo:</label>
+                <input type="text" placeholder="Ej. Juan Pérez">
+            </div>
+            <div class="form-group">
+                <label>NIT:</label>
+                <input type="text" placeholder="Ej. 1234567-8">
+            </div>
+            <div class="form-group">
+                <label>Número Telefónico:</label>
+                <input type="text" placeholder="Ej. 5555-4444">
+            </div>
+            <div class="form-group">
+                <label>Correo Electrónico:</label>
+                <input type="email" placeholder="Ej. cliente@correo.com">
+            </div>
+        </div>
+
+        <!-- Detalle del Requerimiento -->
+        <div class="section-title">Detalle del Requerimiento</div>
+        <div class="pricing-settings">
+            <label for="default-margin"><strong>Margen de venta predeterminado:</strong></label>
+            <input type="number" id="default-margin" value="30" min="0" step="0.01" oninput="applyDefaultMargin()">
+            <span>%</span>
+        </div>
+        <div class="pricing-note">Ingresa el costo del producto y el porcentaje de ganancia. El precio de venta y el total por cantidad se calculan automáticamente.</div>
+        <table class="items-table" id="invoice-items">
+            <thead>
+                <tr>
+                    <th class="col-cant">Cant.</th>
+                    <th class="col-desc">Descripción Técnica del Artículo</th>
+                    <th class="col-foto">Fotografía</th>
+                    <th class="col-costo">Costo (Q)</th>
+                    <th class="col-margen">Ganancia %</th>
+                    <th class="col-precio">Precio venta (Q)</th>
+                    <th class="col-total">Total (Q)</th>
+                    <th class="col-accion"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Fila Inicial Pre-cargada -->
+                <tr>
+                    <td class="col-cant">
+                        <input type="number" class="input-cant" value="1" min="1" step="1" oninput="updateRow(this)">
+                    </td>
+                    <td class="col-desc">
+                        <div class="desc-container">
+                            <textarea rows="4">Cargador para Laptop Toshiba (Reemplazo PA-1750-24)
+- Voltaje de salida: 19V
+- Amperaje de corriente: 3.95A (75W)
+- Tipo de conector: Punta cilíndrica 5.5mm * 2.5mm
+- Componentes: Incluye cargador y cable de poder.</textarea>
+                        </div>
+                    </td>
+                    <td class="col-foto">
+                        <input type="file" id="prod-file-1" accept="image/*" style="display: none;" onchange="previewImage(this, 'prod-img-1')">
+                        <div class="product-photo-box" onclick="document.getElementById('prod-file-1').click();" title="Clic para agregar foto del producto">
+                            <img id="prod-img-1" alt="Producto">
+                            <span>📷 Agregar Foto</span>
+                        </div>
+                    </td>
+                    <td class="col-costo">
+                        <input type="number" class="input-costo" value="390.00" min="0" step="0.01" oninput="updateRow(this)">
+                    </td>
+                    <td class="col-margen">
+                        <input type="number" class="input-margen" value="30" min="0" step="0.01" oninput="updateRow(this)">
+                    </td>
+                    <td class="col-precio">
+                        <span class="calculated-price">Q 507.00</span>
+                    </td>
+                    <td class="col-total">
+                        <span class="row-total">Q 507.00</span>
+                    </td>
+                    <td class="col-accion">
+                        <button type="button" class="btn-delete" onclick="deleteRow(this)">✕</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="add-row-container">
+            <button type="button" class="btn-add" onclick="addNewRow()">➕ Agregar Ítem</button>
+        </div>
+
+        <!-- Sección de Cálculos / Totales -->
+        <table class="totals-section">
+            <tr>
+                <td class="totals-label">Subtotal Neto:</td>
+                <td class="totals-value">Q <span id="lbl-subtotal">0.00</span></td>
+            </tr>
+            <tr>
+                <td class="totals-label">IVA Pagado (12%):</td>
+                <td class="totals-value">Q <span id="lbl-iva">0.00</span></td>
+            </tr>
+            <tr class="grand-total">
+                <td class="totals-label" style="font-weight: bold; color: var(--primary-color);">TOTAL DE VENTA:</td>
+                <td class="totals-value" style="color: var(--primary-color);">Q <span id="lbl-total-venta">0.00</span></td>
+            </tr>
+            <tr>
+                <td class="totals-label">50% DE ANTICIPO:</td>
+                <td class="totals-value">Q <span id="lbl-anticipo">0.00</span></td>
+            </tr>
+            <tr>
+                <td class="totals-label">SALDO A LA ENTREGA:</td>
+                <td class="totals-value">Q <span id="lbl-saldo">0.00</span></td>
+            </tr>
+        </table>
+
+        <!-- Términos y Condiciones -->
+        <div class="section-title">Términos y Condiciones Comerciales</div>
+        <ul class="conditions-list">
+            <li><strong>MODALIDAD DE ADQUISICIÓN:</strong> Este producto se maneja exclusivamente BAJO PEDIDO.</li>
+            <li><strong>CONDICIÓN DE COMPRA:</strong> Para iniciar la gestión de orden y entrega, es indispensable la cancelación del 50% de anticipo. El saldo restante se cancela al momento de recibir el artículo de forma física.</li>
+            <li><strong>GARANTÍA:</strong> Garantía estándar de fábrica contra defectos técnicos de hardware.</li>
+        </ul>
+
+        <!-- Firma -->
+        <div class="signature-container">
+            <div class="signature-line"></div>
+            <div class="signature-title">Firma Autorizada</div>
+            <div style="font-size: 13px; color: #555;">Pc Conexión.</div>
+        </div>
+
+    </div>
+
+    <!-- Botón flotante para PDF -->
+    <div class="print-actions">
+        <button class="btn-print" onclick="window.print()">
+            💾 Guardar como PDF / Imprimir
+        </button>
+    </div>
+
+    <script>
+        // Contador para generar IDs únicos en las fotos de nuevos productos
+        let rowCounter = 1;
+
+        // Función unificada para procesar y previsualizar imágenes localmente
+        function previewImage(inputElement, previewId) {
+            const file = inputElement.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgElement = document.getElementById(previewId);
+                    imgElement.src = e.target.result;
+                    imgElement.style.display = 'block';
+                    
+                    // Ocultar el texto indicador adjunto
+                    const spanElement = inputElement.nextElementSibling.querySelector('span');
+                    if(spanElement) {
+                        spanElement.style.display = 'none';
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Cálculo por artículo: costo + margen de ganancia; luego cantidad x precio de venta.
+        function money(value) {
+            return (Number(value) || 0).toFixed(2);
+        }
+
+        function getRows() {
+            return Array.from(document.querySelectorAll('#invoice-items tbody tr'));
+        }
+
+        function updateRow(element) {
+            const row = element.closest('tr');
+            if (!row) return;
+
+            const cantidad = Math.max(0, parseFloat(row.querySelector('.input-cant')?.value) || 0);
+            const costo = Math.max(0, parseFloat(row.querySelector('.input-costo')?.value) || 0);
+            const margen = Math.max(0, parseFloat(row.querySelector('.input-margen')?.value) || 0);
+
+            // "Porcentaje de venta que quiero ganarle" se aplica sobre el costo.
+            const precioVenta = costo * (1 + margen / 100);
+            const totalFila = cantidad * precioVenta;
+
+            const precioEl = row.querySelector('.calculated-price');
+            const totalEl = row.querySelector('.row-total');
+
+            if (precioEl) precioEl.textContent = 'Q ' + money(precioVenta);
+            if (totalEl) totalEl.textContent = 'Q ' + money(totalFila);
+
+            updateTotals();
+        }
+
+        function updateTotals() {
+            let totalVenta = 0;
+
+            getRows().forEach(row => {
+                const cantidad = Math.max(0, parseFloat(row.querySelector('.input-cant')?.value) || 0);
+                const costo = Math.max(0, parseFloat(row.querySelector('.input-costo')?.value) || 0);
+                const margen = Math.max(0, parseFloat(row.querySelector('.input-margen')?.value) || 0);
+                const precioVenta = costo * (1 + margen / 100);
+                totalVenta += cantidad * precioVenta;
+            });
+
+            // Mantiene el cálculo del IVA incluido en el precio total.
+            const subtotalNeto = totalVenta / 1.12;
+            const ivaPagar = totalVenta - subtotalNeto;
+            const anticipo = totalVenta * 0.50;
+            const saldoEntrega = totalVenta - anticipo;
+
+            document.getElementById('lbl-subtotal').innerText = money(subtotalNeto);
+            document.getElementById('lbl-iva').innerText = money(ivaPagar);
+            document.getElementById('lbl-total-venta').innerText = money(totalVenta);
+            document.getElementById('lbl-anticipo').innerText = money(anticipo);
+            document.getElementById('lbl-saldo').innerText = money(saldoEntrega);
+        }
+
+        function applyDefaultMargin() {
+            const margen = Math.max(0, parseFloat(document.getElementById('default-margin')?.value) || 0);
+            getRows().forEach(row => {
+                const input = row.querySelector('.input-margen');
+                if (input) input.value = margen;
+            });
+            getRows().forEach(row => updateRow(row.querySelector('.input-margen')));
+        }
+
+        function addNewRow() {
+            rowCounter++;
+            const tableBody = document.querySelector('#invoice-items tbody');
+            const newRow = document.createElement('tr');
+            const defaultMargin = Math.max(0, parseFloat(document.getElementById('default-margin')?.value) || 0);
+
+            newRow.innerHTML = `
+                <td class="col-cant">
+                    <input type="number" class="input-cant" value="1" min="1" step="1" oninput="updateRow(this)">
+                </td>
+                <td class="col-desc">
+                    <div class="desc-container">
+                        <textarea rows="3" placeholder="Descripción técnica del nuevo artículo..."></textarea>
+                    </div>
+                </td>
+                <td class="col-foto">
+                    <input type="file" id="prod-file-${rowCounter}" accept="image/*" style="display: none;" onchange="previewImage(this, 'prod-img-${rowCounter}')">
+                    <div class="product-photo-box" onclick="document.getElementById('prod-file-${rowCounter}').click();" title="Clic para agregar foto del producto">
+                        <img id="prod-img-${rowCounter}" alt="Producto">
+                        <span>📷 Agregar Foto</span>
+                    </div>
+                </td>
+                <td class="col-costo">
+                    <input type="number" class="input-costo" value="0.00" min="0" step="0.01" oninput="updateRow(this)">
+                </td>
+                <td class="col-margen">
+                    <input type="number" class="input-margen" value="${defaultMargin}" min="0" step="0.01" oninput="updateRow(this)">
+                </td>
+                <td class="col-precio">
+                    <span class="calculated-price">Q 0.00</span>
+                </td>
+                <td class="col-total">
+                    <span class="row-total">Q 0.00</span>
+                </td>
+                <td class="col-accion">
+                    <button type="button" class="btn-delete" onclick="deleteRow(this)">✕</button>
+                </td>
+            `;
+
+            tableBody.appendChild(newRow);
+            updateRow(newRow.querySelector('.input-costo'));
+        }
+
+        function deleteRow(button) {
+            const row = button.closest('tr');
+            if (row) row.remove();
+            updateTotals();
+        }
+
+        window.onload = function() {
+            getRows().forEach(row => updateRow(row.querySelector('.input-costo')));
+            updateTotals();
+        };
+    </script>
+</body>
+</html>
