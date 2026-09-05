@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotización Formal de Venta - PC Conexión</title>
+    <title>Cotización Formal - PC Conexión</title>
     <style>
         @page {
             size: Letter portrait;
-            margin: 0.35in;
+            margin: 0.3in;
         }
         :root {
             --primary-color: #0056b3;
@@ -16,55 +16,52 @@
             --text-color: #333;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-color);
-            line-height: 1.5;
+            line-height: 1.4;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f6f9;
+            padding: 10px;
+            background-color: #eef2f5;
         }
 
         .cotizacion-container {
             max-width: 850px;
             margin: 0 auto;
             background: #fff;
-            padding: 40px;
+            padding: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border-radius: 8px;
-            position: relative;
         }
 
         /* Encabezado */
-        .header-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-            table-layout: fixed;
-        }
-
-        .header-table .header-logo-zone { width: 25%; }
-        .header-table .header-services-zone { width: 45%; }
-        .header-table .header-info-zone { width: 30%; }
-
-        .header-logo-zone {
-            text-align: left;
-            vertical-align: middle;
+        .header-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr 1fr;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
         }
 
         .logo-placeholder {
-            width: 150px;
-            height: 100px;
+            width: 100%;
+            height: 90px;
             border: 2px dashed #ccc;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             cursor: pointer;
-            position: relative;
             background: #fafafa;
             border-radius: 6px;
             overflow: hidden;
+            text-align: center;
         }
 
         .logo-placeholder img {
@@ -75,280 +72,188 @@
         }
 
         .logo-placeholder span {
-            font-size: 11px;
+            font-size: 10px;
             color: #666;
-            text-align: center;
-            padding: 5px;
+            padding: 2px;
         }
 
-        /* Servicios horizontales */
-        .header-services-zone {
-            vertical-align: middle;
-            padding: 0 9px;
-        }
-
-        .header-services-animated {
-            width: 100%;
-            box-sizing: border-box;
-            border-left: 1px solid #d5dee8;
-            padding-left: 9px;
+        .header-services {
+            border-left: 2px solid #0056b3;
+            padding-left: 10px;
         }
 
         .service-line {
-            padding: 3px 0 4px;
-        }
-
-        .service-line + .service-line {
-            border-top: 1px solid #e2e7ec;
+            margin-bottom: 8px;
         }
 
         .service-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #12365f;
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 10.5px;
-            line-height: 1.05;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: .15px;
-            color: #12365f;
-            white-space: nowrap;
+            gap: 4px;
         }
 
         .service-title em {
             font-style: normal;
-            color: #0874c9;
-        }
-
-        .camera-line .service-title em {
-            color: #5d941c;
-        }
-
-        .animated-service-icon {
-            width: 23px;
-            height: 23px;
-            min-width: 23px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #0b4f9a;
-            box-shadow: 0 2px 6px rgba(11,79,154,.25);
-            font-size: 12px;
-            animation: headerIconPulse 2s ease-in-out infinite;
-        }
-
-        .camera-line .animated-service-icon {
-            background: #659d1a;
-            animation-delay: .35s;
+            color: var(--primary-color);
         }
 
         .service-options {
             display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            flex-wrap: nowrap;
-            gap: 8px;
-            margin: 3px 0 0 28px;
-            font-size: 8.3px;
-            font-weight: 700;
-            color: #193653;
-            white-space: nowrap;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 2px;
+            font-size: 9.5px;
+            font-weight: 600;
+            color: #444;
         }
 
-        .service-options span {
-            display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            transition: transform .2s ease;
-        }
-
-        .service-options span:hover {
-            transform: translateY(-2px);
-        }
-
-        .service-options i {
-            font-style: normal;
-            font-size: 9px;
-        }
-
-        .camera-line .service-options {
-            color: #486c1c;
-        }
-
-        @keyframes headerIconPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-
-        /* Información de empresa centrada */
-        .header-info-zone {
-            text-align: center !important;
-            vertical-align: middle !important;
-        }
-
-        .header-info-zone .company-name,
-        .header-info-zone .company-slogan,
-        .header-info-zone .company-address,
-        .header-info-zone .company-details,
-        .header-info-zone .whatsapp-contact {
-            text-align: center !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
+        .header-info {
+            text-align: right;
         }
 
         .company-name {
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 22px;
+            font-weight: 800;
             color: var(--primary-color);
             margin: 0;
-            letter-spacing: 1px;
+            line-height: 1.1;
         }
 
-        .slogan, .company-slogan {
+        .company-slogan {
             font-style: italic;
             color: #555;
-            margin: 5px 0;
-            font-size: 10px !important;
-            white-space: nowrap !important;
-            word-break: keep-all !important;
-            display: block !important;
-            width: 100% !important;
+            font-size: 10px;
+            display: block;
+            margin-bottom: 4px;
         }
 
-        .company-address {
-            white-space: nowrap !important;
-            word-break: keep-all !important;
-            display: block !important;
-            width: max-content !important;
-            font-size: 10px !important;
-            color: #666;
-            margin: 3px auto !important;
+        .company-contacts {
+            font-size: 11px;
+            font-weight: 600;
+            color: #333;
         }
 
-        .company-details {
-            font-size: 13px;
-            color: #666;
-            margin: 3px 0;
-            width: max-content !important;
+        .phone-contact {
+            color: #222;
         }
 
         .whatsapp-contact {
-            white-space: nowrap !important;
             color: #128C7E;
-            font-weight: 600;
         }
 
+        /* Barra de Título */
         .title-bar {
-            border-top: 3px solid var(--primary-color);
+            border-top: 2px solid var(--primary-color);
             border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
-            margin-bottom: 25px;
+            padding: 8px 0;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .doc-title {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: bold;
-            color: #444;
-            margin: 0;
+            color: #333;
         }
 
         .doc-date {
-            font-size: 14px;
-            color: #666;
+            font-size: 13px;
+            color: #555;
         }
 
         /* Secciones */
         .section-title {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             background-color: var(--secondary-color);
-            padding: 6px 10px;
-            margin-top: 25px;
-            margin-bottom: 15px;
+            padding: 6px 8px;
+            margin-top: 15px;
+            margin-bottom: 10px;
             border-left: 4px solid var(--primary-color);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         /* Formulario Cliente */
         .client-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 10px;
         }
 
         .form-group {
             display: flex;
             align-items: center;
+            gap: 8px;
         }
 
         .form-group label {
-            width: 140px;
-            font-size: 13px;
+            width: 70px;
+            font-size: 11.5px;
             font-weight: 600;
             color: #555;
+            flex-shrink: 0;
         }
 
         .form-group input {
-            flex: 1;
-            padding: 6px 10px;
+            width: 100%;
+            padding: 5px 8px;
             border: 1px solid var(--border-color);
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 12px;
             outline: none;
         }
 
-        .form-group input:focus {
-            border-color: var(--primary-color);
-        }
-
-        /* Tabla de ítems */
+        /* Tabla de Ítems adaptada */
         .items-table-wrapper {
             width: 100%;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .items-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .items-table th {
             background-color: #343a40;
             color: #fff;
-            font-size: 13px;
-            padding: 8px 10px;
+            font-size: 11px;
+            padding: 6px 8px;
             text-align: left;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .items-table td {
-            padding: 10px;
+            padding: 6px;
             border-bottom: 1px solid var(--border-color);
             vertical-align: top;
         }
 
-        .col-cant { width: 70px; }
-        .col-desc { width: auto; }
-        .col-foto { width: 100px; }
-        .col-costo { width: 95px; }
-        .col-margen { width: 85px; }
-        .col-precio { width: 105px; text-align: right; }
-        .col-total { width: 115px; text-align: right; }
-        .col-accion { width: 45px; text-align: center; }
+        .col-cant { width: 55px; }
+        .col-desc { width: auto; min-width: 140px; }
+        .col-foto { width: 70px; }
+        .col-costo { width: 80px; }
+        .col-margen { width: 65px; }
+        .col-precio { width: 85px; text-align: right; }
+        .col-total { width: 90px; text-align: right; font-weight: bold; font-size: 12px; }
+        .col-accion { width: 35px; text-align: center; }
 
         .input-cant, .input-costo, .input-margen, .input-price {
             width: 100%;
-            padding: 5px;
-            box-sizing: border-box;
+            padding: 4px;
             border: 1px solid var(--border-color);
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .input-cant, .input-margen { text-align: center; }
@@ -356,29 +261,25 @@
 
         .desc-container textarea {
             width: 100%;
-            box-sizing: border-box;
             border: 1px solid var(--border-color);
             border-radius: 4px;
-            padding: 6px;
+            padding: 4px;
             font-family: inherit;
-            font-size: 13px;
+            font-size: 11.5px;
             resize: vertical;
         }
 
-        /* Zona de Foto de Producto */
         .product-photo-box {
-            width: 85px;
-            height: 70px;
+            width: 60px;
+            height: 50px;
             border: 1px dashed #bbb;
-            background: #fbfbfb;
+            background: #fafafa;
             border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
             cursor: pointer;
             overflow: hidden;
-            position: relative;
         }
 
         .product-photo-box img {
@@ -389,122 +290,91 @@
         }
 
         .product-photo-box span {
-            font-size: 9px;
+            font-size: 8px;
             color: #777;
             text-align: center;
-            padding: 2px;
         }
 
-        /* Botón de eliminar ítem */
         .btn-delete {
             background: #dc3545;
             color: white;
             border: none;
-            width: 30px;
-            height: 30px;
+            width: 26px;
+            height: 26px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
         }
 
-        .btn-delete:hover { background: #bd2130; }
-
         .add-row-container {
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .btn-add {
             background: #28a745;
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        .btn-add:hover { background: #218838; }
-
-        /* Rentabilidad y configuración */
-        .pricing-settings {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 12px 0;
-            font-size: 13px;
-        }
-
-        .pricing-settings input {
-            width: 90px;
-            padding: 5px 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-        }
-
+        /* Panel de Rentabilidad */
         .profit-panel {
-            margin-top: 18px;
-            padding: 12px 15px;
+            margin-top: 15px;
+            padding: 10px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             background: #f8f9fa;
         }
 
         .profit-panel-title {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #444;
         }
 
         .profit-summary {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
         }
 
         .profit-card {
             background: #fff;
             border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 8px 10px;
+            border-radius: 4px;
+            padding: 6px 8px;
         }
 
         .profit-card small {
             display: block;
             color: #666;
-            font-size: 11px;
-            margin-bottom: 3px;
+            font-size: 10px;
         }
 
         .profit-card strong {
-            font-family: monospace;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .profit-card.ganancia {
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .profit-card.ganancia strong {
-            font-size: 17px;
+            border-left: 3px solid var(--primary-color);
         }
 
         /* Totales */
         .totals-section {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 15px;
             border-collapse: collapse;
         }
 
         .totals-section td {
-            padding: 4px 10px;
-            font-size: 13px;
+            padding: 3px 6px;
+            font-size: 12px;
         }
 
         .totals-label {
@@ -514,16 +384,16 @@
         }
 
         .totals-value {
-            width: 150px;
+            width: 120px;
             text-align: right;
             font-family: monospace;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             border-bottom: 1px solid var(--border-color);
         }
 
         .grand-total {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--primary-color);
             background-color: var(--secondary-color);
         }
@@ -534,126 +404,44 @@
         }
 
         .condition-field {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .condition-field label {
             display: block;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             color: #555;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
 
         .condition-field textarea {
             width: 100%;
-            box-sizing: border-box;
-            min-height: 36px;
-            padding: 6px;
+            min-height: 28px;
+            padding: 4px;
             border: 1px solid var(--border-color);
             border-radius: 4px;
             font-family: inherit;
-            font-size: 12px;
+            font-size: 11px;
             color: #333;
             resize: vertical;
-            outline: none;
         }
 
-        .condition-field textarea:focus {
-            border-color: var(--primary-color);
-        }
-
-        /* Firma */
-        .signature-container {
-            margin-top: 40px;
-            width: 250px;
-            text-align: center;
-        }
-
-        .signature-line {
-            border-top: 1px solid #333;
-            margin-bottom: 5px;
-        }
-
-        .signature-title {
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        /* Botones de acción flotantes */
-        .print-actions {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-save-pdf, .btn-print {
-            border: none;
-            padding: 10px 18px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            color: #fff;
-        }
-
-        .btn-save-pdf { background: #198754; }
-        .btn-save-pdf:hover { background: #157347; }
-        .btn-print { background: #0d6efd; }
-        .btn-print:hover { background: #0b5ed7; }
-
-        /* Zoom controls */
-        .zoom-controls {
-            position: fixed;
-            top: 14px;
-            right: 14px;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 8px;
-            background: rgba(255,255,255,0.96);
-            border: 1px solid #cfd5db;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .zoom-controls button {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #b8bec5;
-            border-radius: 5px;
-            background: #fff;
-            color: #333;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        #zoom-level {
-            min-width: 45px;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        /* Hojas en blanco adicionales */
+        /* Anexos Fotográficos */
         .blank-page-controls {
             display: flex;
             align-items: center;
             gap: 8px;
             margin: 15px auto;
             max-width: 850px;
+            flex-wrap: wrap;
         }
 
         .btn-add-blank-page, .btn-remove-blank-page {
             border: 0;
-            border-radius: 5px;
-            padding: 8px 14px;
-            font-size: 12px;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             color: #fff;
@@ -663,22 +451,26 @@
         .btn-remove-blank-page { background: #dc3545; }
 
         .blank-photo-page {
-            width: 850px;
-            min-height: 1000px;
-            margin: 20px auto;
-            padding: 30px;
-            box-sizing: border-box;
+            width: 100%;
+            max-width: 850px;
+            margin: 15px auto;
+            padding: 15px;
             background: white;
-            border: 1px solid #d8dce1;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
+        }
+
+        .blank-photo-page-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
         }
 
         .blank-photo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 15px;
-            height: 850px;
+            gap: 10px;
         }
 
         .blank-photo-slot {
@@ -689,47 +481,47 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 10px;
-            box-sizing: border-box;
+            padding: 8px;
             background: #fff;
+            min-height: 180px;
         }
 
         .blank-photo-upload {
-            padding: 8px 12px;
+            padding: 6px 10px;
             border: 1px solid #adb5bd;
             border-radius: 4px;
             background: #f8f9fa;
             color: #444;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
         }
 
         .blank-photo-preview {
             max-width: 100%;
-            max-height: 80%;
+            max-height: 120px;
             object-fit: contain;
             display: none;
         }
 
         .blank-photo-editable {
             width: 100%;
-            height: 50px;
-            margin-top: 8px;
+            height: 40px;
+            margin-top: 6px;
             border: 1px solid #c7ced6;
             border-radius: 4px;
-            padding: 5px;
-            font-size: 11px;
+            padding: 4px;
+            font-size: 10px;
             resize: none;
         }
 
         .blank-photo-remove {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 5px;
+            right: 5px;
             border: none;
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
+            width: 22px;
+            height: 22px;
             background: #dc3545;
             color: #fff;
             font-weight: bold;
@@ -737,9 +529,143 @@
             display: none;
         }
 
+        /* Botones Flotantes */
+        .print-actions {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 9999;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-save-pdf, .btn-print {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            color: #fff;
+        }
+
+        .btn-save-pdf { background: #198754; }
+        .btn-print { background: #0d6efd; }
+
+        /* Zoom controls */
+        .zoom-controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 6px;
+            background: rgba(255,255,255,0.95);
+            border: 1px solid #cfd5db;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .zoom-controls button {
+            width: 26px;
+            height: 26px;
+            border: 1px solid #b8bec5;
+            border-radius: 4px;
+            background: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        #zoom-level {
+            min-width: 35px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* ADAPTACIÓN MÓVIL (PANTALLAS PEQUEÑAS / PHONES) */
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 4px;
+            }
+
+            .cotizacion-container {
+                padding: 12px;
+            }
+
+            .header-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .logo-placeholder {
+                max-width: 140px;
+                margin: 0 auto;
+                height: 75px;
+            }
+
+            .header-services {
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-color);
+                padding: 8px 0;
+            }
+
+            .service-title {
+                justify-content: center;
+            }
+
+            .service-options {
+                justify-content: center;
+            }
+
+            .header-info {
+                text-align: center;
+            }
+
+            .client-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .form-group label {
+                width: 65px;
+            }
+
+            .profit-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .blank-photo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .zoom-controls {
+                display: none !important;
+            }
+
+            .print-actions {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                justify-content: space-between;
+            }
+
+            .btn-save-pdf, .btn-print {
+                flex: 1;
+                text-align: center;
+                border-radius: 6px;
+                padding: 10px;
+            }
+        }
+
         /* Estilos de impresión */
         @media print {
-            .zoom-controls, .print-actions, .blank-page-controls, .btn-add, .col-accion, .btn-delete, .profit-panel, .pricing-settings {
+            .zoom-controls, .print-actions, .blank-page-controls, .btn-add, .col-accion, .btn-delete, .profit-panel {
                 display: none !important;
             }
 
@@ -781,44 +707,6 @@
                 border: none !important;
                 background: transparent !important;
             }
-
-            .client-grid input::placeholder {
-                color: transparent !important;
-            }
-        }
-
-        /* Vista móvil (iPhone) */
-        @media screen and (max-width: 768px) {
-            body { padding: 8px; }
-            .cotizacion-container { padding: 15px; }
-
-            .header-table, .header-table tbody, .header-table tr, .header-table td {
-                display: block !important;
-                width: 100% !important;
-                text-align: center !important;
-            }
-
-            .header-logo-zone { margin-bottom: 12px; }
-            .logo-placeholder { margin: 0 auto; }
-            .header-services-animated { border-left: none; padding-left: 0; margin: 12px 0; }
-            .service-options { justify-content: center; margin-left: 0; }
-
-            .client-grid { grid-template-columns: 1fr; gap: 10px; }
-            .form-group label { width: 100px; }
-
-            #zoom-controls { display: none !important; }
-
-            .print-actions {
-                left: 10px;
-                right: 10px;
-                bottom: 10px;
-                flex-direction: column;
-            }
-
-            .btn-save-pdf, .btn-print { width: 100%; border-radius: 8px; }
-
-            .items-table { min-width: 650px; }
-            .profit-summary { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -834,54 +722,48 @@
 
     <div class="cotizacion-container" id="cotizacion-main">
         
-        <!-- Encabezado -->
-        <table class="header-table">
-            <tr>
-                <td class="header-logo-zone">
-                    <input type="file" id="logo-input" accept="image/*" style="display: none;" onchange="loadCompanyLogo(this)">
-                    <div class="logo-placeholder" onclick="document.getElementById('logo-input').click();" title="Haz clic para subir o cambiar el logotipo">
-                        <img id="logo-preview" alt="Logo PC Conexión">
-                        <span id="logo-text">Haz clic para<br>subir Logo</span>
+        <!-- Encabezado adaptable -->
+        <div class="header-grid">
+            <div>
+                <input type="file" id="logo-input" accept="image/*" style="display: none;" onchange="loadCompanyLogo(this)">
+                <div class="logo-placeholder" onclick="document.getElementById('logo-input').click();" title="Haz clic para subir o cambiar el logotipo">
+                    <img id="logo-preview" alt="Logo PC Conexión">
+                    <span id="logo-text">Haz clic para<br>subir Logo</span>
+                </div>
+            </div>
+            
+            <div class="header-services">
+                <div class="service-line">
+                    <div class="service-title">💻 <span>Venta y Reparación de <em>Computadoras</em></span></div>
+                    <div class="service-options">
+                        <span>• Laptop</span>
+                        <span>• Escritorio</span>
+                        <span>• Mantenimiento</span>
                     </div>
-                </td>
-                <td class="header-services-zone">
-                    <div class="header-services-animated">
-                        <div class="service-line">
-                            <div class="service-title">
-                                <span class="animated-service-icon">💻</span>
-                                <span>Venta y Reparación de <em>Computadoras</em></span>
-                            </div>
-                            <div class="service-options">
-                                <span><i>•</i> Laptop</span>
-                                <span><i>•</i> PC de Escritorio</span>
-                                <span><i>•</i> Mantenimiento</span>
-                            </div>
-                        </div>
-                        <div class="service-line camera-line">
-                            <div class="service-title">
-                                <span class="animated-service-icon">📹</span>
-                                <span>Sistemas de <em>Cámaras de Seguridad</em></span>
-                            </div>
-                            <div class="service-options">
-                                <span><i>•</i> Instalación</span>
-                                <span><i>•</i> Configuración</span>
-                                <span><i>•</i> Equipos CCTV</span>
-                            </div>
-                        </div>
+                </div>
+                <div class="service-line">
+                    <div class="service-title">📹 <span>Cámaras de <em>Seguridad</em></span></div>
+                    <div class="service-options">
+                        <span>• Instalación</span>
+                        <span>• Configuración</span>
+                        <span>• CCTV</span>
                     </div>
-                </td>
-                <td class="header-info-zone">
-                    <h1 class="company-name">PC CONEXIÓN</h1>
-                    <span class="company-slogan">"Tu solución tecnológica integral"</span>
-                    <span class="company-address">Guatemala, C.A.</span>
-                    <div class="whatsapp-contact">📱 WhatsApp: +(502) 0000-0000</div>
-                </td>
-            </tr>
-        </table>
+                </div>
+            </div>
+
+            <div class="header-info">
+                <h1 class="company-name">PC CONEXIÓN</h1>
+                <span class="company-slogan">"Tu solución tecnológica integral"</span>
+                <div class="company-contacts">
+                    <div class="phone-contact">☎️ Tel: 7791-7876</div>
+                    <div class="whatsapp-contact">📱 WhatsApp: 3164-6798</div>
+                </div>
+            </div>
+        </div>
 
         <!-- Barra de Título -->
         <div class="title-bar">
-            <span class="doc-title">COTIZACIÓN DE VENTA N° <input type="text" value="001" style="width: 60px; font-weight: bold; color: var(--primary-color);"></span>
+            <span class="doc-title">COTIZACIÓN N° <input type="text" value="001" style="width: 50px; font-weight: bold; color: var(--primary-color);"></span>
             <span class="doc-date">Fecha: <input type="date" id="doc-fecha"></span>
         </div>
 
@@ -915,9 +797,9 @@
                         <th class="col-cant">Cant.</th>
                         <th class="col-desc">Descripción</th>
                         <th class="col-foto">Imagen</th>
-                        <th class="col-costo">Costo Unit.</th>
-                        <th class="col-margen">Margen %</th>
-                        <th class="col-precio">Precio Unit.</th>
+                        <th class="col-costo">Costo U.</th>
+                        <th class="col-margen">Marg.%</th>
+                        <th class="col-precio">Precio U.</th>
                         <th class="col-total">Subtotal</th>
                         <th class="col-accion"></th>
                     </tr>
@@ -975,7 +857,7 @@
             </tr>
             <tr class="payment-control-row">
                 <td class="totals-label">
-                    Anticipo (<input type="number" id="anticipo-porcentaje" value="50" min="0" max="100" style="width: 45px; text-align: center;" oninput="calculateTotals()">%):
+                    Anticipo (<input type="number" id="anticipo-porcentaje" value="50" min="0" max="100" style="width: 35px; text-align: center;" oninput="calculateTotals()">%):
                 </td>
                 <td class="totals-value" id="anticipo-val">Q 0.00</td>
             </tr>
@@ -1010,13 +892,6 @@
             </div>
         </div>
 
-        <!-- Firma -->
-        <div class="signature-container">
-            <div class="signature-line"></div>
-            <div class="signature-title">PC CONEXIÓN</div>
-            <div style="font-size: 11px; color: #666;">Firma y Sello Autorizado</div>
-        </div>
-
     </div>
 
     <!-- Contenedor para páginas adicionales de fotografías -->
@@ -1026,7 +901,7 @@
     <div class="blank-page-controls">
         <button type="button" class="btn-add-blank-page" onclick="addBlankPhotoPage()">+ Agregar Hoja de Anexos / Fotos</button>
         <button type="button" class="btn-remove-blank-page" onclick="removeBlankPhotoPage()">- Eliminar Hoja de Fotos</button>
-        <span id="blank-page-count">Hojas anexas: 0</span>
+        <span id="blank-page-count" style="font-size: 11px; color: #555;">Hojas anexas: 0</span>
     </div>
 
     <!-- Botones de Acción Flotantes -->
@@ -1045,6 +920,7 @@
             currentZoom = Math.min(Math.max(currentZoom + delta, 50), 150);
             document.getElementById('zoom-level').innerText = currentZoom + '%';
             document.getElementById('cotizacion-main').style.transform = `scale(${currentZoom / 100})`;
+            document.getElementById('cotizacion-main').style.transformOrigin = 'top center';
         }
 
         function resetZoom() {
@@ -1184,7 +1060,7 @@
             document.getElementById('summary-profit').innerText = 'Q ' + gananciaNeta.toFixed(2);
         }
 
-        // Manejo de Hojas en Blanco Adicionales para Fotografías
+        // Manejo de Hojas Adicionales
         let blankPageCount = 0;
 
         function addBlankPhotoPage() {
@@ -1202,7 +1078,7 @@
                             <input type="file" accept="image/*" id="blank-img-${blankPageCount}-${i}" style="display:none;" onchange="loadBlankPhoto(this)">
                             <label for="blank-img-${blankPageCount}-${i}" class="blank-photo-upload">+ Cargar Foto ${i}</label>
                             <img class="blank-photo-preview" id="preview-${blankPageCount}-${i}">
-                            <textarea class="blank-photo-editable" placeholder="Escribe aquí la descripción o nota de la imagen..."></textarea>
+                            <textarea class="blank-photo-editable" placeholder="Notas de la imagen..."></textarea>
                             <button type="button" class="blank-photo-remove" onclick="removeBlankPhoto(this)" title="Eliminar foto">✕</button>
                         </div>
                     `).join('')}
@@ -1254,7 +1130,6 @@
             slot.classList.remove('has-photo');
         }
 
-        // Inicializar cálculos
         calculateTotals();
     </script>
 </body>
