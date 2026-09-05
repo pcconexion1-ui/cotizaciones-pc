@@ -378,27 +378,6 @@
             border-radius: 4px;
         }
 
-        /* Botón de eliminar visible y cómodo en teléfonos */
-        .btn-delete-mobile {
-            display: none;
-            width: 100%;
-            min-height: 44px;
-            margin-top: 8px;
-            padding: 10px 12px;
-            border: 0;
-            border-radius: 8px;
-            background: #dc3545;
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .btn-delete-mobile:active {
-            transform: scale(.98);
-        }
-
         /* Botones de acción dentro de la tabla */
         .btn-delete {
             background: #dc3545;
@@ -778,18 +757,6 @@
             transform-origin: top center;
         }
 
-        @media (max-width: 768px) {
-            /* En iPhone el botón de eliminar aparece dentro de cada artículo,
-               evitando que quede fuera de la pantalla por el ancho de la tabla. */
-            .btn-delete-mobile {
-                display: block;
-            }
-
-            .col-accion {
-                display: none !important;
-            }
-        }
-
         @media print {
             @page {
                 size: Letter portrait;
@@ -868,7 +835,7 @@
                 padding: 0;
                 max-width: 100%;
             }
-            .print-actions, .btn-add, .col-accion, .btn-delete, .btn-delete-mobile {
+            .print-actions, .btn-add, .col-accion, .btn-delete {
                 display: none !important;
             }
             .items-table th.col-accion, .items-table td.col-accion,
@@ -1413,6 +1380,387 @@
             }
         }
 
+
+/* ============================================================
+   CORRECCIÓN RESPONSIVE PARA IPHONE / TELÉFONOS
+   - Evita que la cotización quede más ancha que la pantalla.
+   - Convierte la tabla de artículos en tarjetas verticales.
+   - Mantiene Agregar Ítem y Eliminar Ítem funcionando.
+   - Evita que los botones de PDF/Imprimir tapen los totales.
+   ============================================================ */
+@media screen and (max-width: 600px) {
+
+    html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow-x: hidden !important;
+    }
+
+    body {
+        margin: 0 !important;
+        padding: 8px !important;
+        background: #f4f6f9 !important;
+        box-sizing: border-box !important;
+    }
+
+    .cotizacion-container {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 auto !important;
+        padding: 14px !important;
+        box-sizing: border-box !important;
+        border-radius: 6px !important;
+        overflow: visible !important;
+    }
+
+    /* Encabezado */
+    .header-table,
+    .header-table tbody,
+    .header-table tr,
+    .header-table td {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .header-table {
+        margin-bottom: 16px !important;
+    }
+
+    .header-logo-zone {
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .logo-placeholder {
+        width: 130px !important;
+        height: 88px !important;
+        margin: 0 auto 8px !important;
+    }
+
+    .header-services-zone,
+    .header-info-zone {
+        width: 100% !important;
+        padding: 0 !important;
+        text-align: center !important;
+    }
+
+    .header-services-animated {
+        border-left: 0 !important;
+        border-top: 1px solid #d5dee8 !important;
+        padding: 7px 0 !important;
+    }
+
+    .service-options {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        white-space: normal !important;
+        margin: 3px 0 0 !important;
+    }
+
+    .company-name {
+        font-size: 22px !important;
+    }
+
+    .company-slogan,
+    .company-tagline,
+    .slogan,
+    .company-address,
+    .address,
+    .header-info-zone .company-address,
+    .header-info-zone .company-details {
+        width: 100% !important;
+        max-width: 100% !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+        font-size: 9px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Título y datos del cliente */
+    .title-bar {
+        margin-bottom: 15px !important;
+        padding: 8px 0 !important;
+        gap: 8px !important;
+    }
+
+    .doc-title {
+        font-size: 15px !important;
+    }
+
+    .doc-date {
+        font-size: 11px !important;
+    }
+
+    .client-grid {
+        grid-template-columns: 1fr !important;
+        gap: 9px !important;
+    }
+
+    .form-group {
+        display: block !important;
+    }
+
+    .form-group label {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 4px !important;
+        font-size: 11px !important;
+    }
+
+    .form-group input {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Margen */
+    .pricing-settings {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+
+    .net-profit-inline {
+        margin-left: 0 !important;
+    }
+
+    /* ========================================================
+       TABLA DE ARTÍCULOS -> TARJETAS EN MÓVIL
+       ======================================================== */
+    .items-table {
+        width: 100% !important;
+        max-width: 100% !important;
+        table-layout: auto !important;
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+        margin-top: 10px !important;
+    }
+
+    .items-table thead {
+        display: none !important;
+    }
+
+    .items-table tbody {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .items-table tbody tr {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 0 14px !important;
+        padding: 8px !important;
+        box-sizing: border-box !important;
+        border: 1px solid #d8dde3 !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,.06) !important;
+    }
+
+    .items-table tbody td {
+        display: grid !important;
+        grid-template-columns: 112px minmax(0, 1fr) !important;
+        align-items: center !important;
+        gap: 7px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 7px 3px !important;
+        box-sizing: border-box !important;
+        border-bottom: 1px solid #edf0f2 !important;
+        vertical-align: middle !important;
+    }
+
+    .items-table tbody td:last-child {
+        border-bottom: 0 !important;
+    }
+
+    .items-table tbody td::before {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        color: #555 !important;
+        line-height: 1.15 !important;
+    }
+
+    .items-table .col-cant::before { content: "Cantidad"; }
+    .items-table .col-desc::before { content: "Descripción técnica"; }
+    .items-table .col-foto::before { content: "Fotografía"; }
+    .items-table .col-costo::before { content: "Costo (Q)"; }
+    .items-table .col-margen::before { content: "Ganancia %"; }
+    .items-table .col-precio::before { content: "Precio venta (Q)"; }
+    .items-table .col-total::before { content: "Total (Q)"; }
+    .items-table .col-accion::before { content: "Acción"; }
+
+    .items-table .col-cant,
+    .items-table .col-desc,
+    .items-table .col-foto,
+    .items-table .col-costo,
+    .items-table .col-margen,
+    .items-table .col-precio,
+    .items-table .col-total,
+    .items-table .col-accion {
+        width: 100% !important;
+        text-align: left !important;
+    }
+
+    .items-table .col-cant input,
+    .items-table .col-costo input,
+    .items-table .col-margen input,
+    .items-table .desc-container,
+    .items-table .desc-container textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .items-table .desc-container textarea {
+        min-height: 85px !important;
+        font-size: 12px !important;
+    }
+
+    .items-table .product-photo-box {
+        width: 100% !important;
+        max-width: 150px !important;
+        height: 95px !important;
+        justify-self: start !important;
+    }
+
+    .items-table .calculated-price,
+    .items-table .row-total {
+        text-align: left !important;
+        white-space: nowrap !important;
+    }
+
+    .items-table .col-accion {
+        display: grid !important;
+        grid-template-columns: 112px minmax(0, 1fr) !important;
+    }
+
+    .items-table .btn-delete {
+        justify-self: start !important;
+        min-height: 40px !important;
+        padding: 9px 14px !important;
+        font-size: 13px !important;
+        border-radius: 6px !important;
+    }
+
+    /* Botón agregar */
+    .add-row-container {
+        margin-top: 8px !important;
+    }
+
+    .btn-add {
+        width: 100% !important;
+        min-height: 42px !important;
+        font-size: 14px !important;
+    }
+
+    /* Totales */
+    .totals-section {
+        width: 100% !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
+    }
+
+    .totals-section td {
+        padding: 5px 3px !important;
+        font-size: 11px !important;
+        word-break: normal !important;
+    }
+
+    .totals-label {
+        width: 43% !important;
+        text-align: left !important;
+    }
+
+    .totals-value {
+        width: 57% !important;
+        text-align: right !important;
+        font-size: 12px !important;
+    }
+
+    .payment-detail {
+        white-space: normal !important;
+        font-size: 10px !important;
+    }
+
+    /* Condiciones */
+    .section-title {
+        font-size: 12px !important;
+        margin-top: 18px !important;
+        margin-bottom: 9px !important;
+    }
+
+    .condition-field label {
+        font-size: 9px !important;
+    }
+
+    .condition-field textarea {
+        font-size: 10px !important;
+    }
+
+    /* Controles de páginas y pie */
+    .blank-page-controls {
+        flex-wrap: wrap !important;
+        width: 100% !important;
+        padding: 4px 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .btn-add-blank-page,
+    .btn-remove-blank-page {
+        flex: 1 1 140px !important;
+    }
+
+    /* IMPORTANTE: en iPhone los botones ya no quedan flotando
+       encima de PRECIO NORMAL / ANTICIPO / SALDO. */
+    .print-actions {
+        position: static !important;
+        width: 100% !important;
+        margin: 16px 0 8px !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .btn-save-pdf,
+    .btn-print {
+        flex: 1 1 140px !important;
+        min-height: 42px !important;
+        box-sizing: border-box !important;
+    }
+
+    .print-help {
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    /* Zoom: compacto para que no tape el encabezado */
+    .zoom-controls {
+        top: 7px !important;
+        right: 7px !important;
+        gap: 3px !important;
+        padding: 4px 5px !important;
+        transform: scale(.9) !important;
+        transform-origin: top right !important;
+    }
+
+    .zoom-controls button {
+        width: 29px !important;
+        height: 28px !important;
+    }
+
+    #zoom-level {
+        min-width: 42px !important;
+        font-size: 11px !important;
+    }
+}
+
 </style>
 </head>
 <body>
@@ -1548,7 +1896,6 @@
 - Amperaje de corriente: 3.95A (75W)
 - Tipo de conector: Punta cilíndrica 5.5mm * 2.5mm
 - Componentes: Incluye cargador y cable de poder.</textarea>
-                            <button type="button" class="btn-delete-mobile" onclick="deleteRow(this)" aria-label="Eliminar este ítem">🗑️ Eliminar ítem</button>
                         </div>
                     </td>
                     <td class="col-foto">
@@ -2402,7 +2749,6 @@
                 <td class="col-desc">
                     <div class="desc-container">
                         <textarea rows="3" placeholder="Descripción técnica del nuevo artículo..."></textarea>
-                        <button type="button" class="btn-delete-mobile" onclick="deleteRow(this)" aria-label="Eliminar este ítem">🗑️ Eliminar ítem</button>
                     </div>
                 </td>
                 <td class="col-foto">
