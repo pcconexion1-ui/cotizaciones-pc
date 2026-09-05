@@ -1,0 +1,29 @@
+COTIZACIONES PC — VERSIÓN PARA iPHONE
+
+IMPORTANTE
+Esta versión está preparada como PWA (Progressive Web App).
+Para que los botones funcionen en iPhone, NO debe abrirse desde
+la app Archivos como un HTML local. Debe publicarse en una dirección
+HTTPS (por ejemplo, un sitio web o GitHub Pages).
+
+UNA VEZ PUBLICADA
+1. Abre la dirección HTTPS en Safari en el iPhone.
+2. Toca Compartir.
+3. Selecciona "Añadir a pantalla de inicio".
+4. Ponle el nombre "Cotizaciones PC".
+5. Ábrela desde el nuevo icono.
+
+La aplicación conserva:
+- cálculos de cotización
+- anticipo y saldo
+- fotos
+- correlativo
+- Guardar como PDF / Imprimir
+- adaptación para iPhone
+- ocultamiento de los cuatro desgloses cuando anticipo = 0%
+
+Archivos:
+- index.html
+- manifest.webmanifest
+- sw.js
+- icons/
